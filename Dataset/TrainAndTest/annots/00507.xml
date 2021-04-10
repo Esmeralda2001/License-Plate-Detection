@@ -1,0 +1,26 @@
+<annotation>
+	                <folder>annots</folder>
+	                <filename>00507.jpg</filename>
+	                <path>C:/Users/midni/Desktop/School/INNO/Dataset/images/00507.jpg</path>
+	                <source>
+		                <database>Unknown</database>
+	                </source>
+	                <size>
+		                <width>720</width>
+		                <height>1160</height>
+		                <depth>3</depth>
+	                </size>
+	                <segmented>0</segmented>
+	                    <object>
+		                    <name>plate</name>
+		                    <pose>Unspecified</pose>
+		                    <truncated>0</truncated>
+		                    <difficult>0</difficult>
+		                    <bndbox>
+			                    <xmin>242</xmin>
+			                    <ymin>428</ymin>
+			                    <xmax>483</xmax>
+			                    <ymax>518</ymax>
+		                    </bndbox>
+	                    </object>
+</annotation>

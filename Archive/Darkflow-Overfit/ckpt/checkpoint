@@ -1,0 +1,3 @@
+model_checkpoint_path: "Testing-6600"
+all_model_checkpoint_paths: "Testing-6500"
+all_model_checkpoint_paths: "Testing-6600"
