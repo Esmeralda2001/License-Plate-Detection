@@ -9,6 +9,7 @@ from numpy import asarray
 class PlateDataset(Dataset):
     """
     Plate class for loading in the train/test sets
+    Adding this line of text here as a test.
     """
     # load the dataset definitions
     def load_dataset(self, dataset_dir, is_train=True, train_max=81):
