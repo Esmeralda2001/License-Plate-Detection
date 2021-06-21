@@ -17,7 +17,7 @@ def first_crops(img, boxes):
         # get coordinates
         y1, x1, y2, x2 = box
         firstCrop = img[y1:y2, x1:x2]
-        cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 3)
+        #cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 3)
         crops.append(firstCrop)
     return crops
 
@@ -38,7 +38,7 @@ def secondCrop(img):
         max_index = np.argmax(areas)
         cnt = contours[max_index]
         x, y, w, h = cv2.boundingRect(cnt)
-        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        #cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
         secondCrop = img[y:y + h, x:x + w]
     else:
         secondCrop = img
