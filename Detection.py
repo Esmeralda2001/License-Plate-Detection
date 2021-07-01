@@ -33,16 +33,17 @@ class PredictionConfig(Config):
     GENERATE_MASKS = False
 
 
-def LoadModel():
+def LoadModel(model_name='mask_rcnn_plate_cfg_vers2_00100.h5'):
     """
     Function to load the mask rcnn model. 
 
     :return: model
     :rtype: MaskRCNN 
     """
+    print(model_name)
     cfg = PredictionConfig()
     model = MaskRCNN(mode='inference', model_dir='./', config=cfg)
-    model.load_weights('mask_rcnn_plate_cfg_vers2_00100.h5', by_name=True)
+    model.load_weights(model_name, by_name=True)
     return model, cfg
 
 
