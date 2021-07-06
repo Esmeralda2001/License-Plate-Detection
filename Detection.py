@@ -1,21 +1,21 @@
 import numpy as np
+from Utility.ImageProcessing import *
 from numpy import expand_dims
 from mrcnn.config import Config
 from mrcnn.model import MaskRCNN
 from matplotlib.patches import Rectangle
 import matplotlib.pyplot as plt
 import cv2
-from mrcnn.model import mold_image
-from PIL import Image, ImageEnhance, ImageFilter
-import pytesseract
-from Utility.ImageProcessing import *
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import pickle
 import io
 import time
 import re
 from difflib import SequenceMatcher
+from mrcnn.model import mold_image
+from PIL import Image, ImageEnhance, ImageFilter
+import pytesseract
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 # Change path to your own tesseract installation.
 # Tesseract installation: https://github.com/tesseract-ocr/tesseract
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
@@ -35,10 +35,14 @@ class PredictionConfig(Config):
 
 def LoadModel(model_name='mask_rcnn_plate_cfg_vers2_00100.h5'):
     """
-    Function to load the mask rcnn model. 
+    Function to load the mask rcnn model.
+    :param model_name: name of the Mask RCNN model to be loaded
+    :type model_name: string
 
-    :return: model
-    :rtype: MaskRCNN 
+    :return model: the model to be returned
+    :return cfg: the configuration of the model to be returned
+    :rtype model: MaskRCNN
+    :rtype cfg: Config
     """
     print(model_name)
     cfg = PredictionConfig()
@@ -49,6 +53,8 @@ def LoadModel(model_name='mask_rcnn_plate_cfg_vers2_00100.h5'):
 
 def predict_once(img, model, cfg, debug=False):
     """
+    Function for predicting/detecting license plates on a given photo
+
     :param img: path to the image we want to detect plates on
     :param model: license plate detection model
     :param cfg: configuration for the model
@@ -94,15 +100,15 @@ def predict_once(img, model, cfg, debug=False):
 
 def Tesseract_OCR(img, lang):
     """
-    Function to read text on images with pytesseract 
+    Function to read text on images with pytesseract
 
-    :param img: the image that needs to be read from 
-    :param lang: language for Tesseract to use 
-    :type img: cv2 
-    :type lang: string 
+    :param img: the image that needs to be read from
+    :param lang: language for Tesseract to use
+    :type img: cv2
+    :type lang: string
 
     :return plates: the plates that were detected
-    :rtype plates: string list 
+    :rtype plates: string list
     """
     im_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     (thresh, im_bw) = cv2.threshold(im_gray, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
@@ -122,13 +128,24 @@ def Tesseract_OCR(img, lang):
         length_tester = text.replace("-", "")
         if len(length_tester) >= 6:
             if text[0] == "-":
-                text = text[:0] + "" + text[0 +1:]               
+                text = text[:0] + "" + text[0 + 1:]
             plates.append(re.sub('[\n-\x0c]',  '', text))
     plates = list(set(plates))
     return plates
 
-def detect_and_return_plate(img, model, cfg):
-    boxes, images = predict_once(img, model, cfg)
+
+def detect_and_return_plate(img, model, cfg, debug=False):
+    """
+    Function for detecting license plates and returning OCR output
+
+    :param img: path to image file
+    :param model: Mask RCNN model used for detection
+    :param config: configuration of the Mask RCNN model
+
+    :return plates_list: list containing all the read license plates
+    :rtype plates_list: list of strings
+    """
+    boxes, images = predict_once(img, model, cfg, debug=debug)
     first_c = first_crops(images, boxes)
 
     plates_list = []

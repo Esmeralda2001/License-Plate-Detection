@@ -1,7 +1,0 @@
-CUDA 10.0
-CuDNN V7.6.5
-To gain access to these obsolete versions membership of nvidia development is needed this can be requested at:
-https://developer.nvidia.com/rdp/cudnn-download
-
-WARNING:
-MAKE SURE YOUR GPU IS COMPATIBLE TO USE CUDA
